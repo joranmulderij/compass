@@ -97,13 +97,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.0"
-  flutter_launcher_name:
-    dependency: "direct dev"
-    description:
-      path: "../flutter_launcher_name"
-      relative: true
-    source: path
-    version: "0.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter

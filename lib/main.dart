@@ -77,17 +77,28 @@ class _CompassState extends State<Compass> {
         double size = min(constraints.maxHeight, constraints.maxWidth);
         return Stack(
           children: [
-            Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.rotationY(accelerationX / 20)..rotateX(accelerationY / 20),
-              child: AnimatedRotation(
-                angle: -(angle + angleOffset * 360),
-                duration: Duration(milliseconds: 200),
-                child: Image.asset(
-                  'assets/compass.png',
-                  height: size,
-                  width: size,
-                ),
+            TweenAnimationBuilder<double>(
+              tween: Tween<double>(begin: 0, end: accelerationY),
+              duration: Duration(milliseconds: 1000),
+              curve: Curves.ease,
+              builder: (context, accelerationY, _) => TweenAnimationBuilder<double>(
+                  tween: Tween<double>(begin: 0, end: accelerationX),
+                  duration: Duration(milliseconds: 1000),
+                  curve: Curves.ease,
+                  child: AnimatedRotation(
+                    angle: -(angle + angleOffset * 360),
+                    duration: Duration(milliseconds: 200),
+                    child: Image.asset(
+                      'assets/compass.png',
+                      height: size,
+                      width: size,
+                    ),
+                  ),
+                  builder: (context, accelerationX, child) => Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationY(accelerationX / 20)..rotateX(accelerationY / 20),
+                    child: child,
+                  )
               ),
             ),
             AnimatedPositioned(
